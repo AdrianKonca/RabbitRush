@@ -15,7 +15,7 @@ public class Map : MonoBehaviour
                 gameObject.name = "Tile(" + x + ", " + z + ")";
                 gameObject.transform.parent = this.transform;
                 gameObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-                gameObject.transform.position = new Vector3((float)x + 0.5f, 0f, (float)z + 0.5f);
+                gameObject.transform.position = new Vector3((float)x, 0f, (float)z);
 
             }
         }
