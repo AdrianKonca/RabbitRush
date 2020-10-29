@@ -19,20 +19,19 @@ public class CharacterMovement : MonoBehaviour
     void Update()
     {
         this.transform.position = Vector3.MoveTowards(this.transform.position, nextPosition, Time.deltaTime * MOVEMENT_SPEED);
-        var horizontalMovement = Input.GetAxis(HORIZONAL_AXIS);
-        var sideMovement = Input.GetAxis(VERTICAL_AXIS);
-        print(sideMovement + " " + horizontalMovement);
+        var sideMovement = Input.GetAxis(HORIZONAL_AXIS);
+        var horizontalMovement = Input.GetAxis(VERTICAL_AXIS);
         if (isMoving && Vector3.Distance(nextPosition, transform.position) < POSITION_MAX_DELTA)
             isMoving = false;
-        if (!isMoving && (Mathf.Abs(sideMovement) + Mathf.Abs(horizontalMovement)) > AXIS_MINIMUM_MOVEMENT)
+        if (!isMoving && (Mathf.Abs(horizontalMovement) + Mathf.Abs(sideMovement)) > AXIS_MINIMUM_MOVEMENT)
         {
-            if (Mathf.Abs(sideMovement) > Mathf.Abs(horizontalMovement))
+            if (Mathf.Abs(horizontalMovement) > Mathf.Abs(sideMovement))
             {
-                nextPosition += new Vector3(Mathf.Sign(sideMovement), 0, 0);
+                nextPosition += new Vector3(Mathf.Sign(horizontalMovement), 0, 0);
             }
             else
             {
-                nextPosition += new Vector3(0, 0, -Mathf.Sign(horizontalMovement));
+                nextPosition += new Vector3(0, 0, -Mathf.Sign(sideMovement));
             }
             isMoving = true;
         }
