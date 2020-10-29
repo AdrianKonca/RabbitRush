@@ -9,13 +9,13 @@ public class CharacterMovement : MonoBehaviour
     private float MOVEMENT_SPEED = 5f;
     private float POSITION_MAX_DELTA = 0.001f;
     private float AXIS_MINIMUM_MOVEMENT = 0.05f;
-    private bool isMoving = false;
+    private bool isMoving;
     private Vector3 nextPosition;
     void Start()
     {
-        nextPosition = this.transform.position;
-
+        Respawn();
     }
+
     void Update()
     {
         this.transform.position = Vector3.MoveTowards(this.transform.position, nextPosition, Time.deltaTime * MOVEMENT_SPEED);
@@ -35,5 +35,18 @@ public class CharacterMovement : MonoBehaviour
             }
             isMoving = true;
         }
+    }
+    private void Respawn()
+    {
+        transform.position = new Vector3(0, 0.5f, 0);
+        nextPosition = transform.position;
+        isMoving = false;
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        var collisionObject = collision.collider.gameObject;
+        if (collisionObject.name.Contains("deadly"))
+            Respawn();
+        
     }
 }

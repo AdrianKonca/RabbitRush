@@ -8,17 +8,23 @@ public class Spawner : MonoBehaviour
 {
     public GameObject Prefab;
     public float Frequency;
+    public float FrequencyVariation = 0.2f;
+    public float MissChange = 0.2f;
     public int EntityLimit = 10;
+    public bool isDeadly = true;
+    private float _frequency;
     private float _lastSpawned;
     private Queue<GameObject> _prefabs;
 
     private void Spawn()
     {
         var newPrefab = Instantiate(Prefab, this.transform);
+        newPrefab.name = this.name + (isDeadly ? " deadly" : "");
         _prefabs.Enqueue(newPrefab);
         if (_prefabs.Count > EntityLimit)
             Destroy(_prefabs.Dequeue());
         _lastSpawned = Time.time;
+        _frequency = Frequency + Frequency * Random.Range(-FrequencyVariation, FrequencyVariation);
     }
     void Start()
     {
@@ -28,9 +34,12 @@ public class Spawner : MonoBehaviour
 
     void Update()
     {
-        if (Time.time > _lastSpawned + Frequency)
+        if (Time.time > _lastSpawned + _frequency)
         {
-            Spawn();
+            if (Random.value > MissChange)
+                Spawn();
+            else
+                _lastSpawned = Time.time;
         }
     }
 }
