@@ -11,7 +11,9 @@ public class Spawner : MonoBehaviour
     public float FrequencyVariation = 0.2f;
     public float MissChange = 0.2f;
     public int EntityLimit = 10;
-    public bool isDeadly = true;
+    public SpawnerType type;
+    public enum SpawnerType { Deadly, Platform };
+
     private float _frequency;
     private float _lastSpawned;
     private Queue<GameObject> _prefabs;
@@ -19,7 +21,9 @@ public class Spawner : MonoBehaviour
     private void Spawn()
     {
         var newPrefab = Instantiate(Prefab, this.transform);
-        newPrefab.name = this.name + (isDeadly ? " deadly" : "");
+        var tag = type.ToString();
+        newPrefab.tag = tag;
+        newPrefab.name = this.name + " " + tag;
         _prefabs.Enqueue(newPrefab);
         if (_prefabs.Count > EntityLimit)
             Destroy(_prefabs.Dequeue());
@@ -29,6 +33,7 @@ public class Spawner : MonoBehaviour
     void Start()
     {
         _prefabs = new Queue<GameObject>();
+
         Spawn();
     }
 

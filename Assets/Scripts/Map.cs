@@ -4,22 +4,51 @@ using UnityEngine;
 
 public class Map : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public enum TileType { Grid, Platform }
+    public static TileType GetRowInformation(Vector3 position)
+    {
+        if (Mathf.Round(position.x) == 1 || Mathf.Round(position.x) == 5)
+        {
+            return TileType.Platform;
+        }
+        else
+        {
+            return TileType.Grid;
+        }
+    }
+    public static float GetTileHeight()
+    {
+        return 0f;
+    }
+
+    public static bool IsTileEmpty(Vector3 position)
+    {
+        return Mathf.Round(position.x) == 1 || Mathf.Round(position.x) == 5;
+    }
+    public static bool IsVectorInBounds(Vector3 move)
+    {
+        return !(move.x < -0.5 || move.x > 9.5 || move.z < -0.5 || move.z > 9.5);
+
+    }
+
+    public GameObject spawner;
     void Start()
     {
-        for (int x = 0; x < 5; x++)
+        var gameObject = new GameObject();
+        gameObject.transform.parent = transform;
+        gameObject.name = "Tiles";
+        for (int x = 0; x < 10; x++)
         {
-            for (int z = 0; z < 5; z++)
-            {
-                var gameObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
-                gameObject.name = "Tile(" + x + ", " + z + ")";
-                gameObject.transform.parent = this.transform;
-                gameObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-                gameObject.transform.position = new Vector3((float)x, 0f, (float)z);
-
-            }
+            if (!(x == 1 || x == 5))
+                for (int z = 0; z < 10; z++)
+                {
+                    var plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
+                    plane.name = "Tile(" + x + ", " + z + ")";
+                    plane.transform.parent = gameObject.transform;
+                    plane.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                    plane.transform.position = new Vector3((float)x, 0f, (float)z);
+                }
         }
-
     }
 
     // Update is called once per frame
