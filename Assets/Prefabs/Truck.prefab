@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1123959824098520860}
   - component: {fileID: 2959688240543437531}
   - component: {fileID: 1123959824098520849}
+  - component: {fileID: 7604157427822688249}
   m_Layer: 0
   m_Name: Truck
   m_TagString: Untagged
@@ -108,5 +109,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dc628331f5972b4986995f27fd928c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementSpeed: 5
+  MovementSpeed: 3.5
   DirectionAngle: 0
+--- !u!54 &7604157427822688249
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123959824098520862}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 116
+  m_CollisionDetection: 0
