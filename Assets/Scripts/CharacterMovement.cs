@@ -113,6 +113,12 @@ public class CharacterMovement : MonoBehaviour
                         isMoving = false;
                     }
                 }
+                //if (isMoving)
+                //{
+                //    var rotation = Quaternion.LookRotation(moveTargetPositon - moveStartPosition, Vector3.up);
+                //    rotation.x += 90f;
+                //    transform.GetChild(1).transform.rotation = rotation;
+                //}
             }
         }
         Debug.DrawLine(transform.position, moveTargetPositon, new Color(200, 200, 0));
