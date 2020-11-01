@@ -16,6 +16,7 @@ public class CharacterMovement : MonoBehaviour
     private Vector3 moveTargetPositon;
     private Vector3 movementDirection;
     private PlatformInformation platform;
+    private float PLATFORM_OFFSET = 0.6f;
     private bool isOnPlatform;
 
     void Start()
@@ -60,7 +61,7 @@ public class CharacterMovement : MonoBehaviour
                 movementDirection = new Vector3(0, 0, -Mathf.Sign(sideMovement));
             }
             moveTargetPositon = transform.position + movementDirection;
-            if (Map.IsVectorInBounds(moveTargetPositon))
+            if (Map.IsPositionInBounds(moveTargetPositon))
             {
                 moveStartPosition = transform.position;
                 isMoving = true;
@@ -81,7 +82,7 @@ public class CharacterMovement : MonoBehaviour
                     else if (nextTileType == Map.TileType.Platform)
                     {
                         platform = getNextPlatform(movementDirection);
-                        if (Vector3.Distance(platform.FuturePosition, moveTargetPositon) > 0.66f)
+                        if (Vector3.Distance(platform.FuturePosition, moveTargetPositon) > PLATFORM_OFFSET)
                         {
                             platform = null;
                             moveTargetPositon = getGridPosition(transform.position) + movementDirection;
@@ -182,6 +183,8 @@ public class CharacterMovement : MonoBehaviour
             if (isOnPlatform)
                 transform.position = platform.Platform.position;
         }
+        if (!Map.IsPositionInBounds(transform.position))
+            Respawn();
 
     }
     public void Respawn()

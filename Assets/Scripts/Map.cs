@@ -25,10 +25,9 @@ public class Map : MonoBehaviour
     {
         return Mathf.Round(position.x) == 1 || Mathf.Round(position.x) == 5;
     }
-    public static bool IsVectorInBounds(Vector3 move)
+    public static bool IsPositionInBounds(Vector3 position)
     {
-        return !(move.x < -0.5 || move.x > 9.5 || move.z < -0.5 || move.z > 9.5);
-
+        return !(position.x < -0.5 || position.x > 9.5 || position.z < -0.5 || position.z > 9.5);
     }
 
     public GameObject spawner;
