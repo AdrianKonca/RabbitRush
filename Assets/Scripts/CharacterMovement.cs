@@ -16,7 +16,7 @@ public class CharacterMovement : MonoBehaviour
     private Vector3 moveTargetPositon;
     private Vector3 movementDirection;
     private PlatformInformation platform;
-    private float PLATFORM_OFFSET = 0.6f;
+    private float PLATFORM_OFFSET = 0.60f;
     private bool isOnPlatform;
 
     void Start()
@@ -95,7 +95,6 @@ public class CharacterMovement : MonoBehaviour
                             movementDirection = moveTargetPositon - moveStartPosition;
                             movementDirection.y = 0f;
                         }
-                        
                     }
                 }
                 else if (currentTileType == Map.TileType.Platform)
@@ -110,7 +109,20 @@ public class CharacterMovement : MonoBehaviour
                     }
                     else if (nextTileType == Map.TileType.Platform)
                     {
-                        isMoving = false;
+                        platform = getNextPlatform(movementDirection);
+                        if (Vector3.Distance(platform.FuturePosition, moveTargetPositon) > PLATFORM_OFFSET)
+                        {
+                            platform = null;
+                            moveTargetPositon = getGridPosition(transform.position) + movementDirection * 1.25f;
+                            moveTargetPositon.y -= 0.5f;
+                            movementDirection = moveTargetPositon - moveStartPosition;
+                        }
+                        else
+                        {
+                            moveTargetPositon = platform.FuturePosition;
+                            movementDirection = moveTargetPositon - moveStartPosition;
+                            movementDirection.y = 0f;
+                        }
                     }
                 }
                 //if (isMoving)
@@ -121,17 +133,20 @@ public class CharacterMovement : MonoBehaviour
                 //}
             }
         }
-        Debug.DrawLine(transform.position, moveTargetPositon, new Color(200, 200, 0));
-        if (isMoving)
-            Debug.DrawRay(transform.position, Vector3.up, new Color(0, 255, 0));
-        else
-            Debug.DrawRay(transform.position, Vector3.up, new Color(255, 0, 0));
-        getNextPlatform(Vector3.zero);
+        if (platform != null)
+        Debug.DrawRay(transform.position, Vector3.up, new Color(0, 255, 0));
+        //Debug.DrawLine(transform.position, moveTargetPositon, new Color(200, 200, 0));
+        //if (isMoving)
+        //    Debug.DrawRay(transform.position, Vector3.up, new Color(0, 255, 0));
+        //else
+        //    Debug.DrawRay(transform.position, Vector3.up, new Color(255, 0, 0));
+        getNextPlatform(new Vector3(1, 0, 0));
     }
 
     private PlatformInformation getNextPlatform(Vector3 offset)
     {
         var platforms = GameObject.FindGameObjectsWithTag("Platform");
+        //retrieve platform objects from map that we are allowed to jump on
         var platformPositions = new List<PlatformInformation>();
         foreach (var platform in platforms)
         {
@@ -200,5 +215,9 @@ public class CharacterMovement : MonoBehaviour
         isMoving = false;
         isOnPlatform = false;
         platform = null;
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        print("Test2");
     }
 }
