@@ -11,19 +11,21 @@ public class PlatformInformation
 }
 public class PlatformPositioner : MonoBehaviour
 {
-    public PlatformInformation[] GetNextObjectPositions(float time)
+    public List<PlatformInformation> GetNextObjectPositions(float time)
     {
-        var positions = new PlatformInformation[transform.childCount];
+        var positions = new List<PlatformInformation>();
         var rb = GetComponent<Rigidbody>();
         var futureOffset = time * rb.velocity;
         for (int child = 0; child < transform.childCount; child++)
         {
-            positions[child] = new PlatformInformation
-            {
-                Platform = transform.GetChild(child),
-                Parent = this,
-                FuturePosition = transform.GetChild(child).transform.position + futureOffset
-            };
+            var platform = transform.GetChild(child);
+            if (platform.tag == "PlatformPivot")
+                positions.Add(new PlatformInformation
+                {
+                    Platform = transform.GetChild(child),
+                    Parent = this,
+                    FuturePosition = transform.GetChild(child).transform.position + futureOffset
+                });
         }
         return positions;
     }
