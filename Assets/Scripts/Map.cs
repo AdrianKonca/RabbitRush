@@ -7,7 +7,7 @@ public class Map : MonoBehaviour
     public enum TileType { Grid, Platform }
     public static TileType GetRowInformation(Vector3 position)
     {
-        if (Mathf.Round(position.x) == 1 || Mathf.Round(position.x) == 9)
+        if (Mathf.Round(position.x) == 1 || Mathf.Round(position.x) == 2 || Mathf.Round(position.x) == 9)
         {
             return TileType.Platform;
         }
@@ -23,7 +23,7 @@ public class Map : MonoBehaviour
 
     public static bool IsTileEmpty(Vector3 position)
     {
-        return Mathf.Round(position.x) == 1 || Mathf.Round(position.x) == 9;
+        return Mathf.Round(position.x) == 1 || Mathf.Round(position.x) == 2 || Mathf.Round(position.x) == 9;
     }
     public static bool IsPositionInBounds(Vector3 position)
     {
