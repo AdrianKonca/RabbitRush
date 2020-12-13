@@ -7,6 +7,9 @@ TagManager:
   - Deadly
   - Platform
   - PlatformSpawner
+  - Carrot
+  - PlatformPivot
+  - Blocker
   layers:
   - Default
   - TransparentFX

@@ -7,7 +7,7 @@ public class Map : MonoBehaviour
     public enum TileType { Grid, Platform }
     public static TileType GetRowInformation(Vector3 position)
     {
-        if (Mathf.Round(position.x) == 1 || Mathf.Round(position.x) == 2 || Mathf.Round(position.x) == 9)
+        if (Mathf.Round(position.x) > 12.5f && Mathf.Round(position.x) < 17.5f)
         {
             return TileType.Platform;
         }
@@ -18,54 +18,43 @@ public class Map : MonoBehaviour
     }
     public static float GetTileHeight()
     {
-        return 0f;
+        return 0.1f;
     }
 
     public static bool IsTileEmpty(Vector3 position)
     {
-        return Mathf.Round(position.x) == 1 || Mathf.Round(position.x) == 2 || Mathf.Round(position.x) == 9;
+        return (Mathf.Round(position.x) > 12.5f && Mathf.Round(position.x) < 17.5f);
     }
+    //private List
     public static bool IsPositionInBounds(Vector3 position)
     {
-        return !(position.x < -0.5 || position.x > 11.5 || position.z < -0.5 || position.z > 11.5);
+        if (position.x < -0.5 || position.x > 19.5 || position.z < -0.5 || position.z > 16.5)
+            return false;
+
+        return true;
+    }
+
+    public static bool IsTileFree(Vector3 position)
+    {
+        var blockers = GameObject.FindGameObjectsWithTag("Blocker");
+        int myX = Mathf.RoundToInt(position.x);
+        int myZ = Mathf.RoundToInt(position.z);
+        for (int i = 0; i < blockers.Length; i++)
+        {
+            int bX = Mathf.RoundToInt(blockers[i].transform.position.x);
+            int bZ = Mathf.RoundToInt(blockers[i].transform.position.z);
+            if (bX == myX && bZ == myZ)
+                return false;
+        }
+        return true;
     }
 
     public Material MapMaterial;
 
+
     void Start()
     {
-        var road = new Color(0.1f, 0.1f, 0.1f);
-        var grass = new Color(0.1f, 0.7f, 0.1f);
-        var water = new Color(0.1f, 0.1f, 0.7f);
-        var interRoad = new Color(0.4f, 0.4f, 0.4f);
-        var gameObject = new GameObject();
-        gameObject.transform.parent = transform;
-        gameObject.name = "Tiles";
-        for (int x = 0; x < 12; x++)
-        {
-            for (int z = 0; z < 12; z++)
-            {
-                var plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
-                plane.name = "Tile(" + x + ", " + z + ")";
-                plane.transform.parent = gameObject.transform;
-                plane.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-                plane.transform.position = new Vector3((float)x, 0f, (float)z);
 
-                Color color;
-                if (x == 3 || x == 4 || x == 6 || x == 7)
-                    color = road;
-                else if (x == 5)
-                    color = interRoad;
-                else if (x == 1 || x == 9)
-                    color = water;
-                else
-                    color = grass;
-
-                plane.GetComponent<Renderer>().material = MapMaterial;
-                plane.GetComponent<Renderer>().material.color = color;
-                Destroy(plane.GetComponent<MeshCollider>());
-            }
-        }
     }
 
     // Update is called once per frame
