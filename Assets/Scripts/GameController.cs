@@ -20,7 +20,7 @@ public class GameController : MonoBehaviour
 
     private void UpdateCarrotText()
     {
-        var text = System.String.Format("    {0}/{1} Carrots", carrotCount, maxCarrotCount);
+        var text = string.Format("    {0}/{1} Carrots", carrotCount, maxCarrotCount);
         carrotText.text = text;
     }
 
@@ -58,14 +58,10 @@ public class GameController : MonoBehaviour
             }
             else if (!summaryText.IsActive())
             {
-                soundEffects.PlayOneShot(winSound);
+                AudioManager.Instance.PlaySound(AudioManager.Sounds.Win);
                 DisplaySummary();
                 characterMovement.SetMovement(false);
             }
-        }
-        if (Input.GetKey("escape"))
-        {
-            SceneManager.LoadScene("MainMenu");
         }
     }
 
@@ -73,7 +69,7 @@ public class GameController : MonoBehaviour
     {
         carrotCount += 1;
         UpdateCarrotText();
-        soundEffects.PlayOneShot(carrotPickupSound, 0.5f);
+        AudioManager.Instance.PlaySound(AudioManager.Sounds.CarrotPickup);
     }
 
     public void OnDeath()

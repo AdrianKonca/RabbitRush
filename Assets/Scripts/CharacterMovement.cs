@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using static UnityEngine.InputSystem.InputAction;
 
 public class CharacterMovement : MonoBehaviour
 {
+    private PlayerInput inputs;
+    private PlayerInputs playerInputs;
     public float movementSpeed = 5f;
     private string VERTICAL_AXIS = "Vertical";
     private string HORIZONAL_AXIS = "Horizontal";
     private Vector3 startPosition;
     private float POSITION_MAX_DELTA = 0.01f;
     private float AXIS_MINIMUM_MOVEMENT = 0.15f;
-    public bool isMovementAllowed = false;
+    public bool isMovementAllowed = true;
     private bool isMoving;
     private Vector3 moveStartPosition;
     private Vector3 moveTargetPositon;
@@ -23,14 +27,12 @@ public class CharacterMovement : MonoBehaviour
     private Transform rabbitModel;
     private float finalRotation;
 
+    public Camera playerCamera;
     private bool isDying;
     private float timeLeftToRespawn;
     public float deathAnimationLength = 3f;
     private float deathStartHeight;
-
-    public AudioSource soundEffects;
-    public AudioClip deathSound;
-    public AudioClip movementSound;
+    private bool stickReturnedNeutral;
 
     private GameController gameController;
     void Start()
@@ -46,36 +48,40 @@ public class CharacterMovement : MonoBehaviour
         startPosition = transform.position;
         gameController = FindObjectOfType<GameController>();
         Spawn();
+
     }
 
-    Vector3 getGridPosition(Vector3 position)
+    private void Awake()
     {
-
-        var gridPosition = new Vector3(Mathf.Round(position.x), position.y, Mathf.Round(position.z));
-
-        Debug.DrawRay(gridPosition, Vector3.left, new Color(255, 0, 0));
-        Debug.DrawRay(gridPosition, Vector3.right, new Color(0, 255, 0));
-        Debug.DrawRay(gridPosition, Vector3.forward, new Color(0, 0, 255));
-        Debug.DrawRay(gridPosition, Vector3.back, new Color(0, 255, 255));
-        return gridPosition;
+        playerInputs = new PlayerInputs();
     }
-
-    float SimplifiedBezierQuadratic(float t, float startHeight, float middleForce, float endHeight)
+    public void OnMove(InputAction.CallbackContext context)
     {
-        var p1 = new Vector2(0.5f, middleForce);
-        var p2 = new Vector2(1f, endHeight - startHeight);
-
-        var point = 2 * (1 - t) * t * p1 + Mathf.Pow(t, 2) * p2;
-
-        return point.y + startHeight;
-    }
-    void Update()
-    {
-        if (!isMovementAllowed)
+        var isKeyboard = context.control.device is Keyboard;
+        if (!isKeyboard)
+            Debug.Log("Handle sticks");
+        if ((!context.performed && isKeyboard) || !isMovementAllowed)
             return;
-        var sideMovement = Input.GetAxis(HORIZONAL_AXIS);
-        var horizontalMovement = Input.GetAxis(VERTICAL_AXIS);
-        //pick direction of move
+
+        var direction = context.ReadValue<Vector2>();
+        if (!isKeyboard)
+        {
+            if (direction.magnitude < 1)
+            { 
+                if (direction.magnitude < 0.2)
+                    stickReturnedNeutral = true;
+                return;
+            }
+            if (!stickReturnedNeutral)
+                return;
+            if (direction.magnitude >= 1)
+            {
+                stickReturnedNeutral = false;
+            }
+        }
+        
+        var sideMovement = direction.x;
+        var horizontalMovement = direction.y;
         if (!isMoving && (Mathf.Abs(horizontalMovement) + Mathf.Abs(sideMovement)) > AXIS_MINIMUM_MOVEMENT)
         {
             if (Mathf.Abs(horizontalMovement) > Mathf.Abs(sideMovement))
@@ -90,7 +96,7 @@ public class CharacterMovement : MonoBehaviour
             moveTargetPositon = transform.position + movementDirection;
             if (Map.IsPositionInBounds(moveTargetPositon) && Map.IsTileFree(moveTargetPositon))
             {
-                soundEffects.PlayOneShot(movementSound, 0.1f);
+                AudioManager.Instance.PlaySound(AudioManager.Sounds.Movement);
                 moveStartPosition = transform.position;
                 isMoving = true;
                 //if move is going to happen on platform, calculate next position based on platform 
@@ -160,8 +166,27 @@ public class CharacterMovement : MonoBehaviour
                 rabbitModel.rotation = Quaternion.Euler(0, angle, 0);
             }
         }
-        if (platform != null)
-            Debug.DrawRay(transform.position, Vector3.up, new Color(0, 255, 0));
+    }
+
+    Vector3 getGridPosition(Vector3 position)
+    {
+        var gridPosition = new Vector3(Mathf.Round(position.x), position.y, Mathf.Round(position.z));
+
+        Debug.DrawRay(gridPosition, Vector3.left, new Color(255, 0, 0));
+        Debug.DrawRay(gridPosition, Vector3.right, new Color(0, 255, 0));
+        Debug.DrawRay(gridPosition, Vector3.forward, new Color(0, 0, 255));
+        Debug.DrawRay(gridPosition, Vector3.back, new Color(0, 255, 255));
+        return gridPosition;
+    }
+
+    float SimplifiedBezierQuadratic(float t, float startHeight, float middleForce, float endHeight)
+    {
+        var p1 = new Vector2(0.5f, middleForce);
+        var p2 = new Vector2(1f, endHeight - startHeight);
+
+        var point = 2 * (1 - t) * t * p1 + Mathf.Pow(t, 2) * p2;
+
+        return point.y + startHeight;
     }
 
     private PlatformInformation getNextPlatform(Vector3 offset)
@@ -193,7 +218,7 @@ public class CharacterMovement : MonoBehaviour
         timeLeftToRespawn = deathAnimationLength;
         rabbitModel.GetComponent<BoxCollider>().enabled = false;
         isMovementAllowed = false;
-        soundEffects.PlayOneShot(deathSound, 0.23f);
+        AudioManager.Instance.PlaySound(AudioManager.Sounds.Death);
         gameController.OnDeath();
     }
     private void FixedUpdate()
@@ -269,7 +294,7 @@ public class CharacterMovement : MonoBehaviour
     public void Spawn()
     {
         Respawn();
-        isMovementAllowed = false;
+        isMovementAllowed = true; //false
     }
 
     public void SetMovement(bool value)
@@ -279,5 +304,16 @@ public class CharacterMovement : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         print("Test2");
+    }
+    public void InitializePlayer(PlayerConfiguration config)
+    {
+        inputs = config.Input;
+        config.Input.camera = playerCamera;
+        config.Input.onActionTriggered += OnActionTriggered;
+    }
+    private void OnActionTriggered(CallbackContext context)
+    {
+        if (context.action.name == playerInputs.Player.Move.name)
+            OnMove(context);
     }
 }

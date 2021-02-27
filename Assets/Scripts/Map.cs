@@ -23,7 +23,7 @@ public class Map : MonoBehaviour
 
     public static bool IsTileEmpty(Vector3 position)
     {
-        return (Mathf.Round(position.x) > 12.5f && Mathf.Round(position.x) < 17.5f);
+        return (Mathf.Round(position.x) > 12.5f && Mathf.Round(position.x) < 17.5f); 
     }
     //private List
     public static bool IsPositionInBounds(Vector3 position)
