@@ -17,11 +17,11 @@ public class InitializeLevel : MonoBehaviour
                 var player = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation, gameObject.transform);
                 player.GetComponent<CharacterMovement>().InitializePlayer(playerConfigs[i]);
             }
+            Destroy(GameObject.Find("TESTING_OBJECT"));
         }
         catch (System.Exception)
         {
             Debug.LogWarning("No Player configuration could be found - launch game from main menu!");
-            throw;
         }
         
     }
