@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     public void LoadLevel()
     {
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene("MultiplayerSelection");
     }
 
     public void ExitGame()

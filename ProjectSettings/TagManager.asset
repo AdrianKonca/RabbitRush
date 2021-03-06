@@ -10,6 +10,8 @@ TagManager:
   - Carrot
   - PlatformPivot
   - Blocker
+  - Terrain
+  - PlatformTerrain
   layers:
   - Default
   - TransparentFX
