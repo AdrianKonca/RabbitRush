@@ -51,7 +51,8 @@ public class PlayerSelectionManager : MonoBehaviour
         var piManager = GetComponent<PlayerInputManager>();
         //piManager.joiningEnabled = false;
         piManager.DisableJoining();
-        SceneManager.LoadScene("Level1Coop");
+        //TODO: Get from level selection script;
+        SceneManager.LoadScene("Level1");
         levelLoaded = true;
     }
     public void OnPlayerJoinLocal(PlayerInput input)
