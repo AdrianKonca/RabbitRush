@@ -18,6 +18,12 @@ public class InitializeLevel : MonoBehaviour
                 player.GetComponent<CharacterMovement>().InitializePlayer(playerConfigs[i]);
             }
             Destroy(GameObject.Find("TESTING_OBJECT"));
+            var debugCharacter = GameObject.Find("CHARACTER_DEBUG");
+            if (debugCharacter != null)
+            {
+                Debug.LogError("CHARACTER_DEBUG is active in this scene - please disable it!");
+                debugCharacter.SetActive(false);
+            }
         }
         catch (System.Exception)
         {

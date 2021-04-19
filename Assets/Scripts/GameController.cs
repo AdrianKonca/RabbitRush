@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEngine.InputSystem.InputAction;
 
 public class GameController : MonoBehaviour
 {
     public Text carrotText;
     public Text summaryText;
-    public AudioClip winSound;
-    public AudioClip carrotPickupSound;
-    public AudioSource soundEffects;
 
+    public static GameController Instance;
     private int carrotCount = 0;
     private int maxCarrotCount = 0;
     private int deathCount = 0;
     private float timeStarted = 0;
     private CharacterMovement characterMovement;
+    private PlayerInputs playerInputs;
 
     private void UpdateCarrotText()
     {
@@ -41,6 +41,13 @@ public class GameController : MonoBehaviour
 
     }
 
+    void Awake()
+    {
+        if (Instance != null)
+            Debug.LogWarning("Trying to create another singleton!");
+        Instance = this;
+        playerInputs = new PlayerInputs();
+    }
     void Start()
     {
         characterMovement = FindObjectOfType<CharacterMovement>();
@@ -52,11 +59,7 @@ public class GameController : MonoBehaviour
     {
         if (carrotCount == maxCarrotCount)
         {
-            if (summaryText.IsActive() && (Input.GetKey("space") || Input.GetKey("enter")))
-            {
-                SceneManager.LoadScene("MainMenu");
-            }
-            else if (!summaryText.IsActive())
+            if (!summaryText.IsActive())
             {
                 AudioManager.Instance.PlaySound(AudioManager.Sounds.Win);
                 DisplaySummary();
@@ -65,6 +68,19 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void OnActionTriggered(CallbackContext context)
+    {
+        if (context.action.name == "Look")
+            return;
+        //TODO: Change to something else or just add UI
+        if (context.action.name == playerInputs.Player.Fire.name)
+        {
+            if (summaryText.IsActive())
+            {
+                SceneManager.LoadScene("MainMenu");
+            }
+        }
+    }
     public void OnCarrotPickedUp()
     {
         carrotCount += 1;
