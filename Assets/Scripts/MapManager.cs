@@ -284,6 +284,7 @@ public class MapManager : MonoBehaviour
         Debug.DrawLine(transform.position, platformPositions[0].FuturePosition, new Color(255, 0, 0));
         return platformPositions[0];
     }
+
     private PlatformInformation GetNextPlatform(Vector3 sourcePosition, float movementSpeed)
     {
         var platforms = GameObject.FindGameObjectsWithTag("Platform");
@@ -315,6 +316,7 @@ public class MapManager : MonoBehaviour
             return;
 
         //if move is going to happen on platform, calculate next position based on platform
+        var MAX_JUMP_HEIGHT = .5f;
         var start = move.Start - Offset;
         var target = move.Target - Offset;
         var current = Map[(int)start.x, (int)start.z];
@@ -325,10 +327,28 @@ public class MapManager : MonoBehaviour
         //if next tile is blocker or there is no connection then move isn't successful
         if (nextTileType == Tile.Types.Blocker || !current.IsConnected(next))
             return;
-
+        Debug.Log(move.Target);
         if (currentTileType == Tile.Types.Grid && nextTileType == Tile.Types.Grid)
         {
-            //do nothing
+            var hits = Physics.RaycastAll(move.Target + new Vector3(0, 10, 0), -transform.up, 20);
+            Debug.Log(move.IsSuccessful);
+
+            hits = hits.OrderByDescending(h => h.point.y).Where(h => h.collider.tag == "Terrain").ToArray();
+
+            if (hits.Length == 0)
+                return;
+            var hit = hits[0];
+            Debug.Log(hit.point.y);
+            if (hit.point.y - move.Target.y > MAX_JUMP_HEIGHT)
+            {
+                Debug.Log("DUPA: " + hit.point.ToString());
+                Debug.Log("DUPA2: " + (hit.point.y - move.Target.y).ToString());
+                move.IsSuccessful = false;
+                return;
+            }
+            else
+                move.Target.y = hit.point.y;
+                
         }
         else if (currentTileType == Tile.Types.Grid && nextTileType == Tile.Types.Platform)
         {
