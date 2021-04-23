@@ -11,6 +11,7 @@ public class ColorRandomizer : MonoBehaviour
     public float colorMinValue;
     public float colorMaxValue;
 
+    public int ModelIndex = 0;
     public Color PickRandomColor()
     {
         var hue = Random.Range(hueMinValue, hueMaxValue);
@@ -23,6 +24,6 @@ public class ColorRandomizer : MonoBehaviour
     //TODO: Add more generic solution
     void Start()
     {
-        transform.GetChild(0).GetComponent<Renderer>().material.SetColor("_Color", PickRandomColor());
+        transform.GetChild(ModelIndex).GetComponent<Renderer>().material.SetColor("_Color", PickRandomColor());
     }
 }
