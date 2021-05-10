@@ -50,7 +50,7 @@ public class GameController : MonoBehaviour
     private void DisplaySummary()
     {
         float totalTime = Time.time - timeStarted;
-        var text = System.String.Format("Times died: {0}\nTotal time: {1:0.00}s\n\nRATING: A+", deathCount, totalTime);
+        var text = System.String.Format("Times died: {0}\nTotal time: {1:0.00}s\n\nRATING: {2}", deathCount, totalTime, ScoreSystem.GetGrade(1, totalTime, deathCount, SceneManager.GetActiveScene().name));
         summaryText.text = text;
         summaryText.gameObject.SetActive(true);
         characterMovement.SetMovement(false);
