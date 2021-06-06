@@ -59,8 +59,8 @@ public class PlayerSelectionManager : MonoBehaviour
     {
         Debug.Log("Player joined " + input.playerIndex);
         Debug.Log(input);
-
-        if (!playerConfigs.Any(p => p.PlayerIndex == input.playerIndex))
+        var debugCharacter = GameObject.Find("CHARACTER_DEBUG");
+        if (!playerConfigs.Any(p => p.PlayerIndex == input.playerIndex) && (debugCharacter == null || (debugCharacter != null && !debugCharacter.activeSelf)))
         {
             input.transform.SetParent(transform);
             playerConfigs.Add(new PlayerConfiguration(input));

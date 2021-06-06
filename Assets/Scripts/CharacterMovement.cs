@@ -218,9 +218,15 @@ public class CharacterMovement : MonoBehaviour
     }
     public void InitializePlayer(PlayerConfiguration config)
     {
-        inputs = config.Input;
-        config.Input.camera = playerCamera;
-        config.Input.onActionTriggered += OnActionTriggered;
+        SetPlayerInput(config.Input);
+    }
+
+    public void SetPlayerInput(PlayerInput input)
+    {
+        inputs = input;
+        inputs.camera = playerCamera;
+        inputs.onActionTriggered += OnActionTriggered;
+        inputs.onActionTriggered += GameController.Instance.OnActionTriggered;
     }
     private void OnActionTriggered(CallbackContext context)
     {
