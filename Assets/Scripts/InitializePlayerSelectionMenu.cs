@@ -14,12 +14,10 @@ public class InitializePlayerSelectionMenu : MonoBehaviour
         var rootMenu = GameObject.Find("PlayerSelectionMenu");
         if (rootMenu != null)
         {
-
             var menu = Instantiate(playerSelectionMenuPrefab, rootMenu.transform);
             input.uiInputModule = menu.GetComponentInChildren<InputSystemUIInputModule>();
             menu.GetComponent<PlayerSelectionMenuController>().SetPlayerIndex(input.playerIndex);
             
-
             //update gui
             var playerSelectionJoin = GameObject.Find(string.Format("PlayerSelectionJoin[{0}]", input.playerIndex));
             menu.transform.position = playerSelectionJoin.transform.position;
@@ -33,7 +31,6 @@ public class InitializePlayerSelectionMenu : MonoBehaviour
 
                 var nextButton = rootMenu.transform.parent.Find("LevelSelection").transform.Find("Next").GetComponent<Button>();
                 var nextButtonNav = nextButton.navigation;
-
 
                 readyButtonNav.selectOnDown = nextButton;
                 nextButtonNav.selectOnUp = readyButton;

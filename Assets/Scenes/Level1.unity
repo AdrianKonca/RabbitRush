@@ -6325,6 +6325,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MiddleArea Left
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b0fc6d6ed3938b346a73fc494bc4e3a6, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0fc6d6ed3938b346a73fc494bc4e3a6, type: 3}
 --- !u!4 &302994673 stripped
@@ -6332,6 +6336,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b0fc6d6ed3938b346a73fc494bc4e3a6, type: 3}
   m_PrefabInstance: {fileID: 302994672}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &302994674 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b0fc6d6ed3938b346a73fc494bc4e3a6, type: 3}
+  m_PrefabInstance: {fileID: 302994672}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &302994675
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 302994674}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -462981019419857548, guid: b0fc6d6ed3938b346a73fc494bc4e3a6, type: 3}
 --- !u!1 &303993788
 GameObject:
   m_ObjectHideFlags: 0
@@ -18973,9 +18996,10 @@ GameObject:
   - component: {fileID: 851558840}
   - component: {fileID: 851558839}
   - component: {fileID: 851558838}
+  - component: {fileID: 851558841}
   m_Layer: 0
   m_Name: RoadDelimiter
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19057,6 +19081,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 851558836}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!64 &851558841
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 851558836}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &856597086
 PrefabInstance:
@@ -28875,6 +28913,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RiverBed
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0c26ee886ea5e1a4bbcb3320d0fba4e3, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c26ee886ea5e1a4bbcb3320d0fba4e3, type: 3}
 --- !u!1001 &1404694058
@@ -34584,6 +34626,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MiddleArea Right
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b0fc6d6ed3938b346a73fc494bc4e3a6, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0fc6d6ed3938b346a73fc494bc4e3a6, type: 3}
 --- !u!4 &1737510368 stripped
@@ -34591,6 +34637,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b0fc6d6ed3938b346a73fc494bc4e3a6, type: 3}
   m_PrefabInstance: {fileID: 1737510367}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1737510369 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b0fc6d6ed3938b346a73fc494bc4e3a6, type: 3}
+  m_PrefabInstance: {fileID: 1737510367}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1737510370
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737510369}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -462981019419857548, guid: b0fc6d6ed3938b346a73fc494bc4e3a6, type: 3}
 --- !u!1001 &1743970711
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34917,9 +34982,10 @@ GameObject:
   - component: {fileID: 1758367860}
   - component: {fileID: 1758367859}
   - component: {fileID: 1758367858}
+  - component: {fileID: 1758367861}
   m_Layer: 0
   m_Name: Road
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35000,6 +35066,20 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1758367856}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!64 &1758367861
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758367856}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &1759818621
 PrefabInstance:
@@ -39719,9 +39799,10 @@ GameObject:
   - component: {fileID: 2029388617}
   - component: {fileID: 2029388616}
   - component: {fileID: 2029388615}
+  - component: {fileID: 2029388619}
   m_Layer: 0
   m_Name: Road
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39803,6 +39884,20 @@ Transform:
   m_Father: {fileID: 1321512950}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!64 &2029388619
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2029388614}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &2033875599
 GameObject:
   m_ObjectHideFlags: 0
@@ -40420,6 +40515,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EndArea
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0741168f2b91ede489202e3eb5634d56, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0741168f2b91ede489202e3eb5634d56, type: 3}
 --- !u!4 &2051830619 stripped
@@ -40427,6 +40526,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0741168f2b91ede489202e3eb5634d56, type: 3}
   m_PrefabInstance: {fileID: 2051830618}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2051830620 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0741168f2b91ede489202e3eb5634d56, type: 3}
+  m_PrefabInstance: {fileID: 2051830618}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &2051830621
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051830620}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -462981019419857548, guid: 0741168f2b91ede489202e3eb5634d56, type: 3}
 --- !u!1001 &2052768399
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -41426,8 +41544,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: StartArea
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0741168f2b91ede489202e3eb5634d56, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0741168f2b91ede489202e3eb5634d56, type: 3}
+--- !u!1 &2093702012 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0741168f2b91ede489202e3eb5634d56, type: 3}
+  m_PrefabInstance: {fileID: 2093702011}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &2093702013
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093702012}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -462981019419857548, guid: 0741168f2b91ede489202e3eb5634d56, type: 3}
 --- !u!1001 &2094976359
 PrefabInstance:
   m_ObjectHideFlags: 0
