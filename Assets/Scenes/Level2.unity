@@ -7599,7 +7599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prefab: {fileID: 8142812303517958375, guid: c45f02cbbb4c3ff44b3d6d9bc2180413, type: 3}
-  Frequency: 4
+  Frequency: 3
   FrequencyVariation: 0.2
   MissChange: 0.2
   EntityLimit: 15
@@ -7864,7 +7864,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prefab: {fileID: 8142812303517958375, guid: c45f02cbbb4c3ff44b3d6d9bc2180413, type: 3}
-  Frequency: 4
+  Frequency: 2
   FrequencyVariation: 0.2
   MissChange: 0.2
   EntityLimit: 15
@@ -11328,7 +11328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prefab: {fileID: 8142812303517958375, guid: 4d451198f4f3ab24790a29521ef3d280, type: 3}
-  Frequency: 3
+  Frequency: 2
   FrequencyVariation: 0.2
   MissChange: 0.2
   EntityLimit: 15
