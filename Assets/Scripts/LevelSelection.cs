@@ -21,8 +21,7 @@ public class LevelSelection : MonoBehaviour
     {
         string startLevelName = "Riverway";
         _nameToLevelMap = new Dictionary<string, string> {
-            { startLevelName , "Level1Coop" },
-            { "Riverway Old", "Level1" },
+            { startLevelName , "Level1" },
             { "Canyon", "Level2" },
             { "River", "Level3" },
         };
@@ -55,10 +54,6 @@ public class LevelSelection : MonoBehaviour
         else if (_names[_currentLevel] == "River") 
         {
             img.sprite = lvl3;
-        }
-        else if (_names[_currentLevel] == "Riverway Old")
-        {
-            img.sprite = lvl1;
         }
         else if (_names[_currentLevel] == "Riverway")
         {

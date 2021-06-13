@@ -35,19 +35,16 @@ public class CarMovement : MonoBehaviour
             return;
         if (_nextDiveTime > Time.time && !_isDiving)
         {
-            Debug.Log("Startuje topielca");
             _isDiving = true;
         }
         if (_isDiving && (_nextDiveTime + diveTime) < Time.time)
         {
-            Debug.Log("Koncze topielca");
             _nextDiveTime = Random.Range(diveEvery.x, diveEvery.y) + Time.time;
             _isDiving = false;
         }
         if (_isDiving)
         {
             float y = divingCurve.Evaluate((Time.time - _nextDiveTime) / diveTime);
-            Debug.Log(y);
             rb.position = new Vector3(rb.position.x, _startPosition.y - (1 - y), rb.position.z);
         }
     }

@@ -35,7 +35,6 @@ public class GameController : MonoBehaviour
 
     private void UpdateCarrotText()
     {
-        Debug.Log(enemySpawnRate);
         var text = string.Format("{0}/{1}", carrotCount, maxCarrotCount);
         carrotText.text = text;
     }
@@ -103,9 +102,16 @@ public class GameController : MonoBehaviour
         {
             if (summaryText.IsActive())
             {
+                Destroy(GameObject.Find("PlayerSelectionManager"));
                 SceneManager.LoadScene("MainMenu");
             }
         }
+        else if (context.action.name == playerInputs.Player.BackToMenu.name)
+        {
+            Destroy(GameObject.Find("PlayerSelectionManager"));
+            SceneManager.LoadScene("MainMenu");
+        }
+
     }
     public void OnCarrotPickedUp()
     {

@@ -326,22 +326,17 @@ public class MapManager : MonoBehaviour
         //if next tile is blocker or there is no connection then move isn't successful
         if (nextTileType == Tile.Types.Blocker || !current.IsConnected(next))
             return;
-        Debug.Log(move.Target);
         if (currentTileType == Tile.Types.Grid && nextTileType == Tile.Types.Grid)
         {
             var hits = Physics.RaycastAll(move.Target + new Vector3(0, 10, 0), -transform.up, 20);
-            Debug.Log(move.IsSuccessful);
 
             hits = hits.OrderByDescending(h => h.point.y).Where(h => h.collider.tag == "Terrain").ToArray();
 
             if (hits.Length == 0)
                 return;
             var hit = hits[0];
-            Debug.Log(hit.point.y);
             if (hit.point.y - move.Target.y > MAX_JUMP_HEIGHT)
             {
-                Debug.Log("DUPA: " + hit.point.ToString());
-                Debug.Log("DUPA2: " + (hit.point.y - move.Target.y).ToString());
                 move.IsSuccessful = false;
                 return;
             }
