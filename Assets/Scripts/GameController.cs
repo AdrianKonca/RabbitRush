@@ -14,7 +14,6 @@ public class GameController : MonoBehaviour
     private int maxCarrotCount = 0;
     private int deathCount = 0;
     private float timeStarted = 0;
-    private CharacterMovement characterMovement;
     private PlayerInputs playerInputs;
 
     public Text deathText;
@@ -28,9 +27,15 @@ public class GameController : MonoBehaviour
 	public float elapsedTime = -5.0f ;
 	public float volumeDown = 0.4f;
     private float pitchPerCarrot;
+    [HideInInspector]
+    public float enemySpawnRate = 0.8f;
+
+    public enum GameType { Coop, Versus};
+    public GameType type = GameType.Coop;
 
     private void UpdateCarrotText()
     {
+        Debug.Log(enemySpawnRate);
         var text = string.Format("{0}/{1}", carrotCount, maxCarrotCount);
         carrotText.text = text;
     }
@@ -53,8 +58,6 @@ public class GameController : MonoBehaviour
         var text = System.String.Format("Times died: {0}\nTotal time: {1:0.00}s\n\nRATING: {2}", deathCount, totalTime, ScoreSystem.GetGrade(1, totalTime, deathCount, SceneManager.GetActiveScene().name));
         summaryText.text = text;
         summaryText.gameObject.SetActive(true);
-        characterMovement.SetMovement(false);
-		
     }
 
     void Awake()
@@ -66,11 +69,11 @@ public class GameController : MonoBehaviour
     }
     void Start()
     {
-        characterMovement = FindObjectOfType<CharacterMovement>();
         maxCarrotCount = GetMaxCarrotCount();
         timeStarted = Time.time;
 		music.pitch = startingPitch;
 		pitchPerCarrot = gainedPitch / maxCarrotCount ;
+        UpdateCarrotText();
     }
 
     void Update()
@@ -85,7 +88,8 @@ public class GameController : MonoBehaviour
 				music.pitch = startingPitch ;
 				music.volume *= volumeDown ;
                 DisplaySummary();
-                characterMovement.SetMovement(false);
+                foreach (var cm in FindObjectsOfType<CharacterMovement>())
+                    cm.SetMovement(false);
             }
         }
     }

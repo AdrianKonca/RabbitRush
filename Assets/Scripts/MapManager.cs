@@ -314,7 +314,7 @@ public class MapManager : MonoBehaviour
         //if move is out of bounds then move isn't successful;
         if (!IsInBounds(move.Target))
             return;
-
+        //if we are in coop we can't just jump on other rabbits.
         //if move is going to happen on platform, calculate next position based on platform
         var MAX_JUMP_HEIGHT = .5f;
         var start = move.Start - Offset;
@@ -323,7 +323,6 @@ public class MapManager : MonoBehaviour
         var next = Map[(int)target.x, (int)target.z];
         var currentTileType = current.Type;
         var nextTileType = next.Type;
-
         //if next tile is blocker or there is no connection then move isn't successful
         if (nextTileType == Tile.Types.Blocker || !current.IsConnected(next))
             return;

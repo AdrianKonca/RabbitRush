@@ -205,7 +205,7 @@ public class CharacterMovement : MonoBehaviour
     public void Spawn()
     {
         Respawn();
-        isMovementAllowed = true; //false
+        isMovementAllowed = false;
     }
 
     public void SetMovement(bool value)

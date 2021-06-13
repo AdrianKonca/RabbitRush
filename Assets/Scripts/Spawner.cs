@@ -9,12 +9,12 @@ public class Spawner : MonoBehaviour
     public GameObject Prefab;
     public float Frequency;
     public float FrequencyVariation = 0.2f;
-    public float MissChange = 0.2f;
+    public float MissChance = 0.2f;
     public int EntityLimit = 10;
     public SpawnerType type;
     public enum SpawnerType { Deadly, Platform };
 
-    private float _frequency;
+    private float _nextSpawnIn;
     private float _lastSpawned;
     private Queue<GameObject> _prefabs;
 
@@ -28,7 +28,9 @@ public class Spawner : MonoBehaviour
         if (_prefabs.Count > EntityLimit)
             Destroy(_prefabs.Dequeue());
         _lastSpawned = Time.time;
-        _frequency = Frequency + Frequency * Random.Range(-FrequencyVariation, FrequencyVariation);
+        _nextSpawnIn = Frequency + Frequency * Random.Range(-FrequencyVariation, FrequencyVariation);
+        if (type == SpawnerType.Deadly)
+            _nextSpawnIn /= GameController.Instance.enemySpawnRate;
     }
     void Start()
     {
@@ -39,9 +41,9 @@ public class Spawner : MonoBehaviour
 
     void Update()
     {
-        if (Time.time > _lastSpawned + _frequency)
+        if (Time.time > _lastSpawned + _nextSpawnIn)
         {
-            if (Random.value > MissChange)
+            if (Random.value > MissChance)
                 Spawn();
             else
                 _lastSpawned = Time.time;

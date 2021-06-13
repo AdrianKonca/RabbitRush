@@ -8,18 +8,20 @@ public class CountdownScript : MonoBehaviour
     public Text text;
     public float startTime = 5f;
     private float timePassed = 0f;
-    private CharacterMovement characterController;
     void Start()
     {
         text = GetComponent<Text>();
         text.text = Mathf.CeilToInt(startTime).ToString();
-        characterController = FindObjectOfType<CharacterMovement>();
     }
     
     void BeginGame()
     {
         text.gameObject.SetActive(false);
-        characterController.SetMovement(true);
+        foreach (var cm in FindObjectsOfType<CharacterMovement>())
+        {
+            cm.SetMovement(true);
+        }
+        
     }
 
     void Update()
