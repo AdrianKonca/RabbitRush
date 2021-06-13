@@ -5,7 +5,7 @@ using UnityEngine;
 public class ScoreSystem
 {
     static private Dictionary<string, int> _basePoints = new Dictionary<string, int> { 
-        { "Level1", 100 }, { "Level2", 200 } 
+        { "Level1", 300 }, { "Level2", 600 } 
     };
     static private Dictionary<(int, int), string> _grades = new Dictionary<(int, int), string>() {
         {(80, int.MaxValue), "S"},
