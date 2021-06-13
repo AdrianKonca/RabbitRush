@@ -85,6 +85,132 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MovementSpeed: 1.8
   DirectionAngle: 0
+  isDiving: 1
+  divingCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.00034211064
+      value: 1.0037985
+      inSlope: -3.003316
+      outSlope: -3.003316
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.04471796
+    - serializedVersion: 3
+      time: 0.03605868
+      value: 1.0038571
+      inSlope: -0.56232
+      outSlope: -0.56232
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.062367167
+      value: 0.97762823
+      inSlope: -2.3395758
+      outSlope: -2.3395758
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.2877466
+    - serializedVersion: 3
+      time: 0.118011355
+      value: 0.9964275
+      inSlope: -1.3548551
+      outSlope: -1.3548551
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.15252209
+      value: 0.9631676
+      inSlope: -0.04506964
+      outSlope: -0.04506964
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.20860729
+      value: 0.9957452
+      inSlope: -0.12486561
+      outSlope: -0.12486561
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.2688597
+      value: 0.9615358
+      inSlope: 1.3919786
+      outSlope: 1.3919786
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.23501724
+    - serializedVersion: 3
+      time: 0.44740006
+      value: 0.6104948
+      inSlope: -4.3475404
+      outSlope: -4.3475404
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.3211284
+      outWeight: 0.068344824
+    - serializedVersion: 3
+      time: 0.51511675
+      value: 0.25346255
+      inSlope: -1.9153075
+      outSlope: -1.9153075
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5994939
+      value: 0.0665763
+      inSlope: 0.44281977
+      outSlope: 0.44281977
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.49705893
+      outWeight: 0.29124302
+    - serializedVersion: 3
+      time: 0.75510263
+      value: 0.024246939
+      inSlope: -0.031536132
+      outSlope: -0.031536132
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.10438859
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.8996926
+      value: 0.4875229
+      inSlope: 9.258225
+      outSlope: 9.258225
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  diveEvery: {x: 5, y: 10}
+  diveTime: 6
 --- !u!54 &2575970905809873191
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -99,7 +225,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &4788901878348702161
 MonoBehaviour:
