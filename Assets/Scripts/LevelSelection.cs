@@ -23,7 +23,7 @@ public class LevelSelection : MonoBehaviour
         _nameToLevelMap = new Dictionary<string, string> {
             { startLevelName , "Level1" },
             { "Canyon", "Level2" },
-            { "River", "Level3" },
+            //{ "River", "Level3" },
         };
         _names = _nameToLevelMap.Keys.ToList();
         _currentLevel = _names.IndexOf(startLevelName);
@@ -51,10 +51,10 @@ public class LevelSelection : MonoBehaviour
         {
             img.sprite = lvl2;
         }
-        else if (_names[_currentLevel] == "River") 
-        {
-            img.sprite = lvl3;
-        }
+        //else if (_names[_currentLevel] == "River") 
+        //{
+        //    img.sprite = lvl3;
+        //}
         else if (_names[_currentLevel] == "Riverway")
         {
             img.sprite = lvl1;
