@@ -36,6 +36,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "PauseGame",
+                    "type": "Button",
+                    "id": "67736729-4c13-4a99-baec-91a27adc562f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -278,6 +286,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "BackToMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "51ce8d25-a608-4080-a6a7-9efbdb5dbebe",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PauseGame",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

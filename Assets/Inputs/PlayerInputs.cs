@@ -49,6 +49,14 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""PauseGame"",
+                    ""type"": ""Button"",
+                    ""id"": ""67736729-4c13-4a99-baec-91a27adc562f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -291,6 +299,17 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""BackToMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""51ce8d25-a608-4080-a6a7-9efbdb5dbebe"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseGame"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -872,6 +891,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_BackToMenu = m_Player.FindAction("BackToMenu", throwIfNotFound: true);
+        m_Player_PauseGame = m_Player.FindAction("PauseGame", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -937,6 +957,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_BackToMenu;
+    private readonly InputAction m_Player_PauseGame;
     public struct PlayerActions
     {
         private @PlayerInputs m_Wrapper;
@@ -945,6 +966,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @BackToMenu => m_Wrapper.m_Player_BackToMenu;
+        public InputAction @PauseGame => m_Wrapper.m_Player_PauseGame;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -966,6 +988,9 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @BackToMenu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBackToMenu;
                 @BackToMenu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBackToMenu;
                 @BackToMenu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBackToMenu;
+                @PauseGame.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPauseGame;
+                @PauseGame.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPauseGame;
+                @PauseGame.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPauseGame;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -982,6 +1007,9 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @BackToMenu.started += instance.OnBackToMenu;
                 @BackToMenu.performed += instance.OnBackToMenu;
                 @BackToMenu.canceled += instance.OnBackToMenu;
+                @PauseGame.started += instance.OnPauseGame;
+                @PauseGame.performed += instance.OnPauseGame;
+                @PauseGame.canceled += instance.OnPauseGame;
             }
         }
     }
@@ -1142,6 +1170,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnBackToMenu(InputAction.CallbackContext context);
+        void OnPauseGame(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

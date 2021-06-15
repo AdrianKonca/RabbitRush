@@ -7,6 +7,7 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class GameController : MonoBehaviour
 {
+    public GameObject PauseObj;
     public Text carrotText;
     public Text summaryText;
     public static GameController Instance;
@@ -15,22 +16,22 @@ public class GameController : MonoBehaviour
     private int deathCount = 0;
     private float timeStarted = 0;
     private PlayerInputs playerInputs;
-
+    private bool isPaused = false;
     public Text deathText;
-	public Text timeText;
+    public Text timeText;
     public AudioClip winSound;
     public AudioClip carrotPickupSound;
     public AudioSource soundEffects;
-	public AudioSource music ;
-	public float startingPitch = 1.0f ;
-	public float gainedPitch = 1.0f ;
-	public float elapsedTime = -5.0f ;
-	public float volumeDown = 0.4f;
+    public AudioSource music;
+    public float startingPitch = 1.0f;
+    public float gainedPitch = 1.0f;
+    public float elapsedTime = -5.0f;
+    public float volumeDown = 0.4f;
     private float pitchPerCarrot;
     [HideInInspector]
     public float enemySpawnRate = 0.8f;
 
-    public enum GameType { Coop, Versus};
+    public enum GameType { Coop, Versus };
     public GameType type = GameType.Coop;
 
     private void UpdateCarrotText()
@@ -38,13 +39,13 @@ public class GameController : MonoBehaviour
         var text = string.Format("{0}/{1}", carrotCount, maxCarrotCount);
         carrotText.text = text;
     }
-	
-	private void UpdateTimeText()
-	{
-		elapsedTime += Time.deltaTime ;
+
+    private void UpdateTimeText()
+    {
+        elapsedTime += Time.deltaTime;
         var text = System.String.Format("{0:0.00}s", elapsedTime);
         timeText.text = text;
-	}
+    }
 
     private int GetMaxCarrotCount()
     {
@@ -58,7 +59,6 @@ public class GameController : MonoBehaviour
         summaryText.text = text;
         summaryText.gameObject.SetActive(true);
     }
-
     void Awake()
     {
         if (Instance != null)
@@ -70,29 +70,27 @@ public class GameController : MonoBehaviour
     {
         maxCarrotCount = GetMaxCarrotCount();
         timeStarted = Time.time;
-		music.pitch = startingPitch;
-		pitchPerCarrot = gainedPitch / maxCarrotCount ;
+        music.pitch = startingPitch;
+        pitchPerCarrot = gainedPitch / maxCarrotCount;
         UpdateCarrotText();
     }
-
     void Update()
     {
-		UpdateTimeText() ;
-		
+        UpdateTimeText();
+
         if (carrotCount == maxCarrotCount)
         {
             if (!summaryText.IsActive())
             {
                 AudioManager.Instance.PlaySound(AudioManager.Sounds.Win);
-				music.pitch = startingPitch ;
-				music.volume *= volumeDown ;
+                music.pitch = startingPitch;
+                music.volume *= volumeDown;
                 DisplaySummary();
                 foreach (var cm in FindObjectsOfType<CharacterMovement>())
                     cm.SetMovement(false);
             }
         }
     }
-
     public void OnActionTriggered(CallbackContext context)
     {
         if (context.action.name == "Look")
@@ -111,20 +109,44 @@ public class GameController : MonoBehaviour
             Destroy(GameObject.Find("PlayerSelectionManager"));
             SceneManager.LoadScene("MainMenu");
         }
+        else if (context.action.name == playerInputs.Player.PauseGame.name)
+        {
+            Pause();
+        }
+    }
 
+    public void Pause()
+    {
+        //PauseObj = 
+        //for (int i = 0; i < lista.Count; i++) {
+        //    if (lista[i].name == "PauseMenu")
+        //        obj = lista[i];
+        //}
+        if (isPaused)
+        {
+            PauseObj.SetActive(false);
+            Time.timeScale = 1;
+            isPaused = false;
+        }
+        else
+        {
+            PauseObj.SetActive(true);
+            Time.timeScale = 0;
+            isPaused = true;
+        }
     }
     public void OnCarrotPickedUp()
     {
         carrotCount += 1;
         UpdateCarrotText();
         AudioManager.Instance.PlaySound(AudioManager.Sounds.CarrotPickup);
-		music.pitch += pitchPerCarrot ;
+        music.pitch += pitchPerCarrot;
     }
 
     public void OnDeath()
     {
         deathCount += 1;
-		var text = string.Format("{0}", deathCount);
+        var text = string.Format("{0}", deathCount);
         deathText.text = text;
     }
 }
