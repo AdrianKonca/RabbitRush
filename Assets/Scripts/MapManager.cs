@@ -314,7 +314,7 @@ public class MapManager : MonoBehaviour
         //if move is out of bounds then move isn't successful;
         if (!IsInBounds(move.Target))
             return;
-
+        //if we are in coop we can't just jump on other rabbits.
         //if move is going to happen on platform, calculate next position based on platform
         var MAX_JUMP_HEIGHT = .5f;
         var start = move.Start - Offset;
@@ -323,26 +323,20 @@ public class MapManager : MonoBehaviour
         var next = Map[(int)target.x, (int)target.z];
         var currentTileType = current.Type;
         var nextTileType = next.Type;
-
         //if next tile is blocker or there is no connection then move isn't successful
         if (nextTileType == Tile.Types.Blocker || !current.IsConnected(next))
             return;
-        Debug.Log(move.Target);
         if (currentTileType == Tile.Types.Grid && nextTileType == Tile.Types.Grid)
         {
             var hits = Physics.RaycastAll(move.Target + new Vector3(0, 10, 0), -transform.up, 20);
-            Debug.Log(move.IsSuccessful);
 
             hits = hits.OrderByDescending(h => h.point.y).Where(h => h.collider.tag == "Terrain").ToArray();
 
             if (hits.Length == 0)
                 return;
             var hit = hits[0];
-            Debug.Log(hit.point.y);
             if (hit.point.y - move.Target.y > MAX_JUMP_HEIGHT)
             {
-                Debug.Log("DUPA: " + hit.point.ToString());
-                Debug.Log("DUPA2: " + (hit.point.y - move.Target.y).ToString());
                 move.IsSuccessful = false;
                 return;
             }

@@ -52,13 +52,12 @@ public class PlayerSelectionManager : MonoBehaviour
         //piManager.joiningEnabled = false;
         piManager.DisableJoining();
         //TODO: Get from level selection script;
-        SceneManager.LoadScene("Level1");
+        
+        SceneManager.LoadScene(FindObjectOfType<LevelSelection>().GetSelectedSceneName);
         levelLoaded = true;
     }
     public void OnPlayerJoinLocal(PlayerInput input)
     {
-        Debug.Log("Player joined " + input.playerIndex);
-        Debug.Log(input);
         var debugCharacter = GameObject.Find("CHARACTER_DEBUG");
         if (!playerConfigs.Any(p => p.PlayerIndex == input.playerIndex) && (debugCharacter == null || (debugCharacter != null && !debugCharacter.activeSelf)))
         {

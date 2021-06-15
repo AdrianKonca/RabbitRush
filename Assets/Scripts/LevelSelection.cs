@@ -3,26 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class LevelSelection : MonoBehaviour
 {
-    public Text Text;
+    public TextMeshProUGUI text;
     private Dictionary<string, string> _nameToLevelMap;
     private List<string> _names;
     private int _currentLevel;
+    public Image img;
+    public Sprite lvl1;
+    public Sprite lvl2;
+    public Sprite lvl3;
+
 
     private void Awake()
     {
         string startLevelName = "Riverway";
         _nameToLevelMap = new Dictionary<string, string> {
-            { startLevelName , "Level1Coop" },
-            { "Riverway Old", "Level1" },
+            { startLevelName , "Level1" },
             { "Canyon", "Level2" },
-            { "River", "Level3" },
+            //{ "River", "Level3" },
         };
         _names = _nameToLevelMap.Keys.ToList();
         _currentLevel = _names.IndexOf(startLevelName);
-        Text.text = startLevelName;
+        img.sprite = lvl1;
+        text.text = startLevelName;
     }
 
     public void NextLevel()
@@ -41,8 +47,20 @@ public class LevelSelection : MonoBehaviour
 
     private void ReloadMenu()
     {
-        //TODO: Load image;
-        Text.text = _names[_currentLevel];
+        if (_names[_currentLevel] == "Canyon")
+        {
+            img.sprite = lvl2;
+        }
+        //else if (_names[_currentLevel] == "River") 
+        //{
+        //    img.sprite = lvl3;
+        //}
+        else if (_names[_currentLevel] == "Riverway")
+        {
+            img.sprite = lvl1;
+        }
+
+        text.text = _names[_currentLevel];
 
     }
     public string GetSelectedSceneName => _nameToLevelMap[_names[_currentLevel]];
