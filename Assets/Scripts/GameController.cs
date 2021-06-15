@@ -7,6 +7,7 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class GameController : MonoBehaviour
 {
+    public GameObject pauseObj;
     public Text carrotText;
     public Text summaryText;
     public static GameController Instance;
