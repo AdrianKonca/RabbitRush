@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
+using System.IO;
+using System.Text;
 using static UnityEngine.InputSystem.InputAction;
 
 public class GameController : MonoBehaviour
 {
     public GameObject PauseObj;
+    public GameObject EndMenuObj;
     public Text carrotText;
     public Text summaryText;
     public static GameController Instance;
@@ -30,6 +34,7 @@ public class GameController : MonoBehaviour
     private float pitchPerCarrot;
     [HideInInspector]
     public float enemySpawnRate = 0.8f;
+    bool createdFile = false; 
 
     public enum GameType { Coop, Versus };
     public GameType type = GameType.Coop;
@@ -54,10 +59,67 @@ public class GameController : MonoBehaviour
 
     private void DisplaySummary()
     {
+        string path = Directory.GetCurrentDirectory();
+        string fileName = path + "\\" + "Wyniki.txt";
         float totalTime = Time.time - timeStarted;
+        string zapis = System.String.Format("Times died: {0} Total time: {1:0.00}s RATING: {2}",
+                                        deathCount, totalTime, ScoreSystem.GetGrade(
+                                            1, totalTime, deathCount, SceneManager.GetActiveScene().name));
+        if (File.Exists(fileName)){
+            string[] lines = File.ReadAllLines(fileName);
+            List<string> linesList = new List<string>();
+            foreach (string item in lines)
+            {
+                linesList.Add(item);
+            }
+            File.Delete(fileName);
+            bool added = false;
+            using (StreamWriter sw = File.CreateText(fileName))
+            {
+                if (linesList.Count < 10)
+                {
+                    for (int i = 0; i < linesList.Count; i++)
+                    {
+                        if (String.Compare(linesList[i], zapis) > 0)
+                        {
+                            linesList.Insert(i, zapis);
+                            added = true;
+                            break;
+                        }
+                    }
+                    if(added==false)
+                        linesList.Add(zapis);   
+                }
+                else
+                {
+                    for (int i = 0; i < linesList.Count; i++)
+                    {
+                        if (String.Compare(linesList[i], zapis) > 0)
+                        {
+                            linesList[i] = zapis;
+                            break;
+                        }
+                    }
+
+                }
+                foreach (string item in linesList)
+                {
+                    sw.WriteLine(item.ToString());
+                }
+            }
+        }
+        else{
+            using (StreamWriter sw = File.CreateText(fileName))
+            {
+                sw.WriteLine(zapis);
+            }
+        }
+
+        EndMenuObj.SetActive(true);
         var text = System.String.Format("Times died: {0}\nTotal time: {1:0.00}s\n\nRATING: {2}\n\nPress 'Enter' to go back to main menu.", deathCount, totalTime, ScoreSystem.GetGrade(1, totalTime, deathCount, SceneManager.GetActiveScene().name));
         summaryText.text = text;
         summaryText.gameObject.SetActive(true);
+
     }
     void Awake()
     {
@@ -117,11 +179,6 @@ public class GameController : MonoBehaviour
 
     public void Pause()
     {
-        //PauseObj = 
-        //for (int i = 0; i < lista.Count; i++) {
-        //    if (lista[i].name == "PauseMenu")
-        //        obj = lista[i];
-        //}
         if (isPaused)
         {
             PauseObj.SetActive(false);
