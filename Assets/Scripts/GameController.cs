@@ -37,6 +37,7 @@ public class GameController : MonoBehaviour
     [HideInInspector]
     public float enemySpawnRate = 0.8f;
     bool createdFile = false; 
+    bool EndGame = false; 
 
     public enum GameType { Coop, Versus };
     public GameType type = GameType.Coop;
@@ -75,7 +76,7 @@ public class GameController : MonoBehaviour
         {
             fileName = path + "\\" + "inne.txt";
         }
-        float totalTime = Time.time - timeStarted;
+        float totalTime = Time.time - timeStarted - 5;
         string zapis = System.String.Format("Times died: {0} Total time: {1:0.00}s RATING: {2}",
                                         deathCount, totalTime, ScoreSystem.GetGrade(
                                             1, totalTime, deathCount, SceneManager.GetActiveScene().name));
@@ -94,7 +95,19 @@ public class GameController : MonoBehaviour
                 {
                     for (int i = 0; i < linesList.Count; i++)
                     {
-                        if (String.Compare(linesList[i], zapis) > 0)
+                        int start = linesList[i].IndexOf("Times died: ") + "Times died: ".Length;
+                        int end = linesList[i].IndexOf(" Total time:");
+                        String result = lines[i].Substring(start, end - start);
+                        int amountOfDeaths = Int16.Parse(result);//liczba smierci
+                        print(amountOfDeaths);
+
+                        start = linesList[i].IndexOf("Total time: ") + "Total time: ".Length;
+                        end = linesList[i].IndexOf("s RATING:");
+                        result = lines[i].Substring(start, end - start);
+                        float time = float.Parse(result);//czas
+                        print(time);
+
+                        if (amountOfDeaths >= deathCount && time >= totalTime)
                         {
                             linesList.Insert(i, zapis);
                             added = true;
@@ -108,7 +121,21 @@ public class GameController : MonoBehaviour
                 {
                     for (int i = 0; i < linesList.Count; i++)
                     {
-                        if (String.Compare(linesList[i], zapis) > 0)
+                        int start = linesList[i].IndexOf("Times died: ") + "Times died: ".Length;
+                        int end = linesList[i].IndexOf(" Total time:");
+                        String result = lines[i].Substring(start, end - start);
+                        int amountOfDeaths = Int16.Parse(result);//liczba smierci
+                        //print(amountOfDeaths);
+
+                        start = linesList[i].IndexOf("Total time: ") + "Total time: ".Length;
+                        end = linesList[i].IndexOf("s RATING:");
+                        result = lines[i].Substring(start, end - start);
+                        float time = float.Parse(result);//czas
+
+                        //print(linesList[i]);
+                        //print(time);
+
+                        if (amountOfDeaths >= deathCount && time >= totalTime)
                         {
                             linesList[i] = zapis;
                             break;
@@ -129,6 +156,7 @@ public class GameController : MonoBehaviour
             }
             linesList.Add(zapis);
         }
+
         var text = System.String.Format("Times died: {0}\nTotal time: {1:0.00}s\n\nRATING: {2}\n\nPress 'Enter' to go back to main menu.", deathCount, totalTime, ScoreSystem.GetGrade(1, totalTime, deathCount, SceneManager.GetActiveScene().name));
         summaryText.text = text;
 
@@ -137,8 +165,9 @@ public class GameController : MonoBehaviour
             wypisWynikow[i].gameObject.SetActive(true);
             wypisWynikow[i].text = linesList[i];
         }
+        EndGame = true;
+        Time.timeScale = 0;
         EndMenuObj.SetActive(true);
-
     }
     void Awake()
     {
@@ -204,7 +233,7 @@ public class GameController : MonoBehaviour
             Time.timeScale = 1;
             isPaused = false;
         }
-        else
+        else if(EndGame == false)
         {
             PauseObj.SetActive(true);
             Time.timeScale = 0;
