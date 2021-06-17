@@ -1,5 +1,0 @@
-Times died: 0 Total time: 1.84s RATING: S
-Times died: 1 Total time: 4.32s RATING: S
-Times died: 1 Total time: 10.03s RATING: S
-Times died: 1 Total time: 16.18s RATING: S
-Times died: 3 Total time: 10.87s RATING: S
