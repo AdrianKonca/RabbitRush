@@ -3,7 +3,16 @@ guid: 0e46704d64aa27b47a8890424acb7249
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - PauseObj: {fileID: 6105941574778434756, guid: 533671d6e5ba7b4459b399e05b813dc3, type: 3}
+  - carrotText: {instanceID: 0}
+  - summaryText: {instanceID: 0}
+  - deathText: {instanceID: 0}
+  - timeText: {instanceID: 0}
+  - winSound: {instanceID: 0}
+  - carrotPickupSound: {instanceID: 0}
+  - soundEffects: {instanceID: 0}
+  - music: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
